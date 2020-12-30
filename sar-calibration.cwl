@@ -69,8 +69,8 @@ $graph:
   id: main
   inputs:
     polarization:
-      doc: Polarization chanel 
-      label: Polarization chanel 
+      doc: Polarization channel 
+      label: Polarization channel 
       type: string
     snap_graph:
       doc: SNAP Graph
