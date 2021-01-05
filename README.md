@@ -14,13 +14,15 @@ This repo contains a SNAP Graph for the SAR calibration of Copernicus Sentinel-1
 
 If not done yet, install `docker` and `cwltool`.
 
-## Option 1: using the provided SNAP docker image under this organization
+## Execution
+
+### Option 1: using the provided SNAP docker image under this organization
 
 ```console
 cwltool --no-read-only sar-calibration.cwl params.yml
 ```
 
-## Option 2: build a custom docker image 
+### Option 2: build a custom docker image 
 
 ```console
 cwltool --no-read-only sar-calibration-custom-docker.cwl params.yml
