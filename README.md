@@ -90,7 +90,7 @@ cwltool --no-read-only build-run-gpt.cwl params.yml
 
 Use the approach provided to run your own SNAP graphs
 
-1. Create your own repo with this one as a template using the URL https://github.com/snap-contrib/example-cwl-sar-calibration-graph/generate
+1. Create your own repo with this one as a template using the URL https://github.com/snap-contrib/cwl-snap-graph-runner/generate
 
 2. Create the SNAP graphs
 
