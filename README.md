@@ -20,12 +20,68 @@ If not done yet, install `docker` and `cwltool`.
 
 ### Option 1: using the provided SNAP docker image under this organization
 
+Choose this option if you want to use the provided SNAP docker image under https://github.com/snap-contrib/docker-snap/packages/561541
+
+Choose this option if you want to build the docker image yourself using the CWL document `build-run-gpt.cwl` provided.
+
+1. Login on Github docker repository
+
+The docker used in this option is published on Github Packages. 
+
+If you don't have a Personal Access Token with `read:packages` set, create a new one at: https://github.com/settings/tokens/new
+
+Log on the docker repository with:
+
 ```console
-cwltool --no-read-only sar-calibration.cwl params.yml
+docker login docker.pkg.github.com --username <your_user_name> --password <generated_token_not_password>
 ```
 
-### Option 2: build a custom docker image 
+2. Clone this repository 
+
+3. Update the parameters file `safe` list of products to process. The example provided does the Sentinel-1 GRD calibration.
+
+```yaml
+context: {'class': 'Directory', 'path': './'}
+dockerfile: {'class': 'File', 'path': '.docker/Dockerfile'}
+polarization: 'VV'
+snap_graph: {class: File, path: ./sar-calibration.xml}
+safe:
+- {'class': 'Directory', 'path': './S1A_IW_GRDH_1SDV_20201228T170552_20201228T170617_035889_0433FB_D8C7.SAFE/'}
+```
+
+The file `./sar-calibration.xml` contains a SNAP Graph.
+
+4. Run the SNAP graph with CWL: 
 
 ```console
-cwltool --no-read-only sar-calibration-custom-docker.cwl params.yml
+cwltool --no-read-only run-gpt-sar-calibration.cwl  params.yml
+```
+
+The CWL tool will pull the image if needed.
+
+### Option 2: build and use a local docker image 
+
+Choose this option if you want to build the docker image yourself using the CWL document `build-run-gpt.cwl` provided.
+
+1. Clone this repository 
+
+2. Update the parameters file `safe` list of products to process. The example provided does the Sentinel-1 GRD calibration
+
+```yaml
+context: {'class': 'Directory', 'path': './'}
+dockerfile: {'class': 'File', 'path': '.docker/Dockerfile'}
+polarization: 'VV'
+snap_graph: {class: File, path: ./sar-calibration.xml}
+safe:
+- {'class': 'Directory', 'path': './S1A_IW_GRDH_1SDV_20201228T170552_20201228T170617_035889_0433FB_D8C7.SAFE/'}
+```
+
+The file `./sar-calibration.xml` contains a SNAP Graph.
+
+3. Run the SNAP graph with CWL: 
+
+In a terminal, run:
+
+```console
+cwltool --no-read-only build-run-gpt.cwl params.yml
 ```
