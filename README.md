@@ -85,3 +85,17 @@ In a terminal, run:
 ```console
 cwltool --no-read-only build-run-gpt.cwl params.yml
 ```
+
+## Run your own SNAP graphs
+
+Use the approach provided to run your own SNAP graphs
+
+1. Create your own repo with this one as a template using the URL https://github.com/snap-contrib/example-cwl-sar-calibration-graph/generate
+
+2. Create the SNAP graphs
+
+3. Write the CWL document to expose the SNAP Graph parameters you want to provide at execution time
+
+4. Write the YAML parameters file 
+
+5. Run the CWL document
