@@ -1,36 +1,8 @@
 $graph:
-
-- baseCommand: docker 
-
-  class: CommandLineTool
-  id: docker-builder  
-
-  inputs:
-    context:
-       type: Directory
-    dockerfile:
-       type: File
-  arguments:    
-  - build
-  - prefix: -t
-    valueFrom: snap:0.1
-  - prefix: -f
-    valueFrom: $(inputs.dockerfile) 
-  - valueFrom: $(inputs.context.path)
-
-  outputs:
-    nothing:
-      outputBinding:
-        glob: .
-      type: Directory
-      
-  requirements:
-    InlineJavascriptRequirement: {}
-
 - baseCommand: gpt
   hints:
     DockerRequirement:
-      dockerPull: snap:0.1
+      dockerPull: snap:latest
   class: CommandLineTool
   id: clt
   inputs:
@@ -80,10 +52,6 @@ $graph:
       doc: Sentinel-1 GRD product SAFE Directory
       label: Sentinel-1 GRD product SAFE Directory
       type: Directory[]
-    context:
-      type: Directory
-    dockerfile:
-      type: File
   label: SNAP SAR Calibration
   outputs:
   - id: wf_outputs
@@ -98,20 +66,11 @@ $graph:
   - class: SubworkflowFeatureRequirement
   
   steps:
-    node_0:
-      in:
-        context: context
-        dockerfile: dockerfile
-      out:
-      - nothing
-      run: '#docker-builder'
-
     node_1:
       in:
         inp1: snap_graph
         inp2: polarization
         inp3: safe
-        inp4: node_0/nothing
       out:
       - results
       run: '#clt'
